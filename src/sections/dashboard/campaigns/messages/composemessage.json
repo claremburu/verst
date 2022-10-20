@@ -1,0 +1,18 @@
+{
+    "fileExists": "NO",
+    "message": "Deares ##Names##, please pay ##Amount## to ##Phone##",
+    "messageTemplateId": "8",
+    "senderName": "gideon",
+    "campaignName": "earth day",
+    "campaignDescription": "Test campaign",
+    "contacts": "254716484397",
+    "groupIds": "1",
+    "removeDuplicate": "YES",
+    "flash": "NO",
+    "readyToSend": "NO",
+    "schedule": "YES",
+    "scheduleUTCSeconds": "1655107192",
+    "recurring": "YES",
+    "recurFrequency": "2",
+    "recurInterval": "WEEKLY"
+}
