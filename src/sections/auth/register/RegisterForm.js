@@ -56,7 +56,7 @@ export default function RegisterForm() {
   const onSubmit = async (data) => {
     try {
       // await register(data.email, data.password, data.firstName, data.lastName, data.phone);
-      navigate('/auth/activate-otp');
+      navigate('/dashboard/app');
     } catch (error) {
       console.error(error);
       reset();

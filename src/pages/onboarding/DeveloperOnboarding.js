@@ -15,7 +15,7 @@ import Page from '../../components/Page';
 import Image from '../../components/Image';
 // sections
 import { LoginForm } from '../../sections/auth/login';
-import { Welcome } from '../../sections/onboarding';
+import { OnboardingLayout, Welcome } from '../../sections/onboarding';
 
 // ----------------------------------------------------------------------
 
@@ -48,16 +48,17 @@ const SectionStyle = styled(Card)(({ theme }) => ({
   flexDirection: 'column',
   justifyContent: 'center',
   margin: theme.spacing(2, 0, 2, 2),
+  padding:theme.spacing(12,0)
 }));
 
 const ContentStyle = styled('div')(({ theme }) => ({
-  // // maxWidth: 480,
-  // margin: 'auto',
-  // // display: 'flex',
-  // minHeight: '100vh',
-  // // flexDirection: 'column',
-  // // justifyContent: 'center',
-  // padding: theme.spacing(12, 0),
+  // maxWidth: 480,
+  margin: 'auto',
+  // display: 'flex',
+  minHeight: '100vh',
+  // flexDirection: 'column',
+  // justifyContent: 'center',
+  padding: theme.spacing(12),
 }));
 
 // ----------------------------------------------------------------------

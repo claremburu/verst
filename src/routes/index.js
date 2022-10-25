@@ -78,7 +78,7 @@ export default function Router() {
       ),
       children: [
         { element: <Navigate to={PATH_AFTER_LOGIN} replace />, index: true },
-        // { path: 'onboarding', element: <DeveloperOnboarding /> },
+        { path: 'app', element: <GeneralApp /> },
         {
           path: 'jasmin',
           children: [
@@ -159,7 +159,7 @@ const ResetPassword = Loadable(lazy(() => import('../pages/auth/ResetPassword'))
 const VerifyCode = Loadable(lazy(() => import('../pages/auth/VerifyCode')));
 // const OTP = Loadable(lazy(() => import('../pages/auth/OTP')));
 // Dashboard
-// const GeneralApp = Loadable(lazy(() => import('../pages/dashboard/DashboardApp')));
+const GeneralApp = Loadable(lazy(() => import('../pages/dashboard/DashboardApp')));
 
 // onboarding
 
