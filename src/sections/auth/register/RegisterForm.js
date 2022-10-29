@@ -56,7 +56,7 @@ export default function RegisterForm() {
   const onSubmit = async (data) => {
     try {
       // await register(data.email, data.password, data.firstName, data.lastName, data.phone);
-      navigate('/dashboard/app');
+      navigate('/auth/activate-otp', { replace: true });
     } catch (error) {
       console.error(error);
       reset();
@@ -94,7 +94,7 @@ export default function RegisterForm() {
           }}
         />
 
-        <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting} color="error">
+        <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
           Register
         </LoadingButton>
       </Stack>

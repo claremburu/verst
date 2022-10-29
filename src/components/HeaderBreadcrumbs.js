@@ -8,14 +8,14 @@ import Breadcrumbs from './Breadcrumbs';
 // ----------------------------------------------------------------------
 
 HeaderBreadcrumbs.propTypes = {
-  links: PropTypes.array,
+  // links: PropTypes.array,
   action: PropTypes.node,
   heading: PropTypes.string.isRequired,
   moreLink: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   sx: PropTypes.object,
 };
 
-export default function HeaderBreadcrumbs({ links, action, heading, moreLink = '' || [], sx, ...other }) {
+export default function HeaderBreadcrumbs({ action, heading, moreLink = '' || [], sx, ...other }) {
   return (
     <Box sx={{ mb: 5, ...sx }}>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -23,7 +23,7 @@ export default function HeaderBreadcrumbs({ links, action, heading, moreLink = '
           <Typography variant="h4" gutterBottom>
             {heading}
           </Typography>
-          <Breadcrumbs links={links} {...other} />
+          <Breadcrumbs {...other} />
         </Box>
 
         {action && <Box sx={{ flexShrink: 0 }}>{action}</Box>}

@@ -17,6 +17,7 @@ const SimpleBarStyle = styled(SimpleBarReact)(({ theme }) => ({
   '& .simplebar-scrollbar': {
     '&:before': {
       backgroundColor: alpha(theme.palette.grey[600], 0.48),
+      color:"#ffffff"
       // backgroundColor: 'red',
     },
     '&.simplebar-visible:before': {

@@ -65,7 +65,7 @@ export default function NavbarVertical({ isOpenSidebar, onCloseSidebar }) {
         height: 1,
         '& .simplebar-content': { height: 1, display: 'flex', flexDirection: 'column'},
         fontWeight: 'bold',
-        background: '#233647',
+        background: '#008208',
         color: 'white',
         text: 'white',
       }}

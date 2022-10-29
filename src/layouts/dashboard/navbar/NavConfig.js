@@ -46,14 +46,14 @@ const navConfig = [
       // MANAGEMENT : USER
       {
         title: 'projects',
-        path: PATH_DASHBOARD.user.root,
+        path: PATH_DASHBOARD.projects.root,
         icon: ICONS.user,
         children: [
-          { title: 'projects dashboard', path: PATH_DASHBOARD.user.profile },
-          { title: 'new applications', path: PATH_DASHBOARD.user.cards },
-          { title: 'approved projects', path: PATH_DASHBOARD.user.list },
-          { title: 'verified projects', path: PATH_DASHBOARD.user.newUser },
-          { title: 'project health', path: PATH_DASHBOARD.user.editById },
+          { title: 'projects dashboard', path: PATH_DASHBOARD.projects.view },
+          { title: 'new applications', path: "" },
+          { title: 'approved projects', path: "" },
+          { title: 'verified projects', path: "" },
+          { title: 'project health', path: "" },
         ],
       },
     ],
@@ -66,10 +66,10 @@ const navConfig = [
     items: [
       {
         title: 'pools',
-        path: PATH_DASHBOARD.mail.root,
+        path: PATH_DASHBOARD.pools.root,
         icon: ICONS.mail,
         children: [
-          { title: 'pool dashboard', path: PATH_DASHBOARD.blog.posts },
+          { title: 'pool dashboard', path: PATH_DASHBOARD.pools.view },
           { title: 'pool management', path: PATH_DASHBOARD.blog.postById },
           { title: 'tokenize pool', path: PATH_DASHBOARD.blog.newPost },
         ],

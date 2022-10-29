@@ -13,6 +13,8 @@ import useIsMountedRef from '../../../hooks/useIsMountedRef';
 import MyAvatar from '../../../components/MyAvatar';
 import MenuPopover from '../../../components/MenuPopover';
 import { IconButtonAnimate } from '../../../components/animate';
+import Iconify from '../../../components/Iconify';
+
 
 // ----------------------------------------------------------------------
 
@@ -23,11 +25,11 @@ const MENU_OPTIONS = [
   },
   {
     label: 'Profile',
-    linkTo: PATH_DASHBOARD.user.profile,
+    // linkTo: PATH_DASHBOARD.user.profile,
   },
   {
     label: 'Settings',
-    linkTo: PATH_DASHBOARD.user.account,
+    // linkTo: PATH_DASHBOARD.user.account,
   },
 ];
 

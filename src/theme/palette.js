@@ -9,8 +9,8 @@ function createGradient(color1, color2) {
 // SETUP COLORS
 const PRIMARY = {
   lighter: '#C8FACD',
-  light: '#0466c8',
-  main: '#0466c8',
+  light: '#5BE584',
+  main: '#00AB55',
   dark: '#007B55',
   darker: '#005249',
 };
@@ -29,15 +29,12 @@ const INFO = {
   darker: '#04297A',
 };
 const VerstColors = {
-  lighter: '#EB2C28',
-  light: '#1160AD',
-  main: '#EDB41E',
-  dark: '#50A450',
-  darker: '#EA1C47',
-  white: '#FFFFFF',
-  orange: '#ff9f1c',
-  blue: '#023e8a',
-  gray: '#f8f9fa'
+  spartanGreen: '#18453B',
+  white: '#ffffff',
+  black: '#000000',
+  kellyGreen: '#00B20B',
+  limeGreen: '#7BBD00',
+  excellenceGreen: '#0B9A6D'
 }
 const SUCCESS = {
   lighter: '#E9FCD4',
@@ -128,7 +125,7 @@ const palette = {
     ...COMMON,
     mode: 'light',
     // text: { primary: '#fff', secondary: GREY[500], disabled: GREY[600] },
-    text: { primary: GREY[900], secondary: GREY[600], disabled: GREY[600] },
+    text: { primary: GREY[900], secondary: GREY[600], disabled: GREY[600], subheader: VerstColors.white },
     background: { paper: GREY[100], default: GREY[300] , neutral: GREY[500_16]   }, 
     // backgroundColor: { paper: GREY[800], default: GREY[900], neutral: GREY[500_16] },
     action: { active: GREY[600], ...COMMON.action },

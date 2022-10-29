@@ -13,7 +13,7 @@ export const ListSubheaderStyle = styled((props) => <ListSubheader disableSticky
     paddingTop: theme.spacing(3),
     paddingLeft: theme.spacing(2),
     paddingBottom: theme.spacing(1),
-    color: theme.palette.text.primary,
+    color: theme.palette.text.subheader,
     transition: theme.transitions.create('opacity', {
       duration: theme.transitions.duration.shorter,
     }),

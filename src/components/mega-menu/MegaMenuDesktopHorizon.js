@@ -81,7 +81,7 @@ function MegaMenuItem({ parent }) {
           >
             <Masonry columns={3} spacing={2}>
               {children.map((list) => (
-                <Stack key={list.subheader} spacing={1.25} sx={{ mb: 2.5 }}>
+                <Stack key={list.subheader} spacing={1.25} sx={{ mb: 2.5, color:'white' }}>
                   <Typography variant="subtitle1" sx={{ fontWeight: 'fontWeightBold' }} noWrap>
                     {list.subheader}
                   </Typography>
@@ -94,7 +94,8 @@ function MegaMenuItem({ parent }) {
                       underline="none"
                       sx={{
                         typography: 'body2',
-                        color: 'text.primary',
+                        // color: 'text.primary',
+                        color:'white',
                         fontSize: 13,
                         transition: (theme) => theme.transitions.create('all'),
                         '&:hover': { color: 'primary.main' },

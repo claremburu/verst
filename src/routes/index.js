@@ -80,10 +80,20 @@ export default function Router() {
         { element: <Navigate to={PATH_AFTER_LOGIN} replace />, index: true },
         { path: 'app', element: <GeneralApp /> },
         {
-          path: 'jasmin',
+          path: 'projects',
           children: [
             // { element: <Navigate to="/dashboard/jasmin/groups" replace />, index: true },
-            { path: 'groups', element: <JasminGroups /> },
+            { path: 'view', element: <Projects /> },
+            { path: 'users', element: <JasminUsers /> },
+            { path: 'smpp-providers', element: <SmppProviders /> },
+            // { path: 'new', element: <JasminCreate /> },
+          ],
+        },
+        {
+          path: 'pools',
+          children: [
+            // { element: <Navigate to="/dashboard/jasmin/groups" replace />, index: true },
+            { path: 'view', element: <Pools /> },
             { path: 'users', element: <JasminUsers /> },
             { path: 'smpp-providers', element: <SmppProviders /> },
             // { path: 'new', element: <JasminCreate /> },
@@ -166,7 +176,8 @@ const GeneralApp = Loadable(lazy(() => import('../pages/dashboard/DashboardApp')
 const DeveloperOnboarding = Loadable(lazy(() => import('../pages/onboarding/DeveloperOnboarding')));
 
 // Jasmin
-const JasminGroups = Loadable(lazy(() => import('../pages/dashboard/JasminGroups')));
+const Projects = Loadable(lazy(() => import('../pages/dashboard/Projects')));
+const Pools = Loadable(lazy(() => import('../pages/dashboard/Pools')));
 const JasminUsers = Loadable(lazy(() => import('../pages/dashboard/JasminUsers')));
 // const JasminCreate = Loadable(lazy(() => import('../pages/dashboard/jasmin')));
 const SmppProviders = Loadable(lazy(() => import('../pages/dashboard/SmppProviders')));

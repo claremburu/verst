@@ -1,12 +1,10 @@
 import PropTypes from 'prop-types';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Box, Stack, AppBar, Toolbar, Typography } from '@mui/material';
+import { Box, Stack, AppBar, Toolbar } from '@mui/material';
 // hooks
 import useOffSetTop from '../../../hooks/useOffSetTop';
 import useResponsive from '../../../hooks/useResponsive';
-import useCollapseDrawer from '../../../hooks/useCollapseDrawer';
-
 // utils
 import cssStyles from '../../../utils/cssStyles';
 // config
@@ -16,9 +14,11 @@ import Logo from '../../../components/Logo';
 import Iconify from '../../../components/Iconify';
 import { IconButtonAnimate } from '../../../components/animate';
 //
+import Searchbar from './Searchbar';
 import AccountPopover from './AccountPopover';
-import NavbarVertical from '../navbar/NavbarVertical';
-import CollapseButton from '../navbar/CollapseButton';
+import LanguagePopover from './LanguagePopover';
+import ContactsPopover from './ContactsPopover';
+import NotificationsPopover from './NotificationsPopover';
 
 // ----------------------------------------------------------------------
 
@@ -62,17 +62,12 @@ export default function DashboardHeader({ onOpenSidebar, isCollapse = false, ver
 
   const isDesktop = useResponsive('up', 'lg');
 
-  const { collapseClick, collapseHover, onToggleCollapse, onHoverEnter, onHoverLeave } =
-  useCollapseDrawer();
-
   return (
-    <RootStyle 
-    isCollapse={isCollapse} isOffset={isOffset} verticalLayout={verticalLayout}>
+    <RootStyle isCollapse={isCollapse} isOffset={isOffset} verticalLayout={verticalLayout}>
       <Toolbar
         sx={{
           minHeight: '100% !important',
           px: { lg: 5 },
-          background:"#ffffff"
         }}
       >
         {isDesktop && verticalLayout && <Logo sx={{ mr: 2.5 }} />}
@@ -84,14 +79,12 @@ export default function DashboardHeader({ onOpenSidebar, isCollapse = false, ver
         )}
 
         {/* <Searchbar /> */}
-        {/* <Box sx={{display:"flex", flexGrow: 1 , alignItems:"center" }} > */}
-        {/* <img src="/logo/logo_full.jpg" alt="Verst logo" width='10%' height="10%"/> */}
-        {/* <Typography variant='h6' sx={{color: "#0466c8", ml:2, textTransform: "uppercase"}}>Verst Media SMS Portal</Typography></Box> */}
+        <Box sx={{ flexGrow: 1 }} />
 
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
-          {/* <LanguagePopover />
+          {/* <LanguagePopover /> */}
           <NotificationsPopover />
-          <ContactsPopover /> */}
+          <ContactsPopover />
           <AccountPopover />
         </Stack>
       </Toolbar>

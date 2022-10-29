@@ -31,19 +31,21 @@ import { textAlign } from '@mui/system';
 
 // ----------------------------------------------------------------------
 
-MessagesSent.propTypes = {
+ProjectCard.propTypes = {
   color: PropTypes.string,
   icon: PropTypes.string,
   title: PropTypes.string.isRequired,
-  total: PropTypes.number.isRequired,
+  total: PropTypes.number,
+  subheader: PropTypes.string,
   sx: PropTypes.object,
+  // cardIcon: PropTypes.elementType,
 };
 
 // const styles = {
 
 // }
 
-export default function MessagesSent({ title, total, icon, color = 'primary', sx, ...other }) {
+export default function ProjectCard({ title, total, subheader, icon, color = 'primary', sx, ...other }) {
   const [open, setOpen] = useState(false);
 
   const handleClick = () => {
@@ -59,12 +61,17 @@ export default function MessagesSent({ title, total, icon, color = 'primary', sx
           m: 2,
         }}
       >
-        <Typography variant="body2" fontSize={15}>Number of projects</Typography>
+        <Typography variant="body2" fontSize={15}>
+          {title}
+        </Typography>
       </Box>
       <Stack direction="row" sx={{ display: 'flex', alignItems: 'center', m: 2, justifyContent: 'center' }}>
-        <AccessTimeFilledIcon />
-        <Typography variant="subtitle1" fontSize={20}>
-          2
+        <AccessTimeFilledIcon color='#ff0000' fontSize='large'/>
+        <Typography variant="h3" fontSize={20} sx={{ mx: 2 }}>
+          {total}
+        </Typography>
+        <Typography variant="h2" fontSize={40} sx={{ mx: 2 }}>
+          {subheader}
         </Typography>
       </Stack>
     </Card>

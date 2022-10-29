@@ -1,300 +1,271 @@
-import Check from '@mui/icons-material/Check';
-import GroupAddIcon from '@mui/icons-material/GroupAdd';
-import SettingsIcon from '@mui/icons-material/Settings';
-import VideoLabelIcon from '@mui/icons-material/VideoLabel';
-import { Paper, StepContent } from '@mui/material';
+import { yupResolver } from '@hookform/resolvers/yup';
+import DescriptionIcon from '@mui/icons-material/Description';
+import DoneIcon from '@mui/icons-material/Done';
+import PersonIcon from '@mui/icons-material/Person';
+import SettingsPowerIcon from '@mui/icons-material/SettingsPower';
+import StorageIcon from '@mui/icons-material/Storage';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { Button, ListItem, ListItemButton, ListItemIcon, ListItemText, Step, StepLabel, Stepper } from '@mui/material';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Step from '@mui/material/Step';
+import Divider from '@mui/material/Divider';
+import Drawer from '@mui/material/Drawer';
 import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
-import StepLabel from '@mui/material/StepLabel';
-import Stepper from '@mui/material/Stepper';
 import { styled } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
+import Toolbar from '@mui/material/Toolbar';
 import PropTypes from 'prop-types';
 import * as React from 'react';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
+import * as Yup from 'yup';
+import { FormProvider } from '../../components/hook-form';
+import useIsMountedRef from '../../hooks/useIsMountedRef';
+import AllSet from './AllSet';
 import Details from './Details';
+import Financial from './Financial';
 import Home from './Home';
+import Project from './Project';
 
-const QontoConnector = styled(StepConnector)(({ theme }) => ({
-    [`&.${stepConnectorClasses.alternativeLabel}`]: {
-        top: 10,
-        left: 'calc(-50% + 16px)',
-        right: 'calc(50% + 16px)',
-    },
-    [`&.${stepConnectorClasses.active}`]: {
-        [`& .${stepConnectorClasses.line}`]: {
-            borderColor: '#784af4',
-        },
-    },
-    [`&.${stepConnectorClasses.completed}`]: {
-        [`& .${stepConnectorClasses.line}`]: {
-            borderColor: '#784af4',
-        },
-    },
-    [`& .${stepConnectorClasses.line}`]: {
-        borderColor: theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#eaeaf0',
-        borderTopWidth: 3,
-        borderRadius: 1,
-    },
-}));
-
-const QontoStepIconRoot = styled('div')(({ theme, ownerState }) => ({
-    color: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#eaeaf0',
-    display: 'flex',
-    height: 22,
-    alignItems: 'center',
-    ...(ownerState.active && {
-        color: '#784af4',
-    }),
-    '& .QontoStepIcon-completedIcon': {
-        color: '#784af4',
-        zIndex: 1,
-        fontSize: 18,
-    },
-    '& .QontoStepIcon-circle': {
-        width: 8,
-        height: 8,
-        borderRadius: '50%',
-        backgroundColor: 'currentColor',
-    },
-}));
-
-function QontoStepIcon(props) {
-    const { active, completed, className } = props;
-
-    return (
-        <QontoStepIconRoot ownerState={{ active }} className={className}>
-            {completed ? (
-                <Check className="QontoStepIcon-completedIcon" />
-            ) : (
-                <div className="QontoStepIcon-circle" />
-            )}
-        </QontoStepIconRoot>
-    );
-}
-
-QontoStepIcon.propTypes = {
-    /**
-     * Whether this step is active.
-     * @default false
-     */
-    active: PropTypes.bool,
-    className: PropTypes.string,
-    /**
-     * Mark the step as completed. Is passed to child components.
-     * @default false
-     */
-    completed: PropTypes.bool,
-};
+const drawerWidth = 300;
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
-    [`&.${stepConnectorClasses.alternativeLabel}`]: {
-        top: 22,
+  [`&.${stepConnectorClasses.alternativeLabel}`]: {
+    top: 22,
+  },
+  [`&.${stepConnectorClasses.active}`]: {
+    [`& .${stepConnectorClasses.vertical}`]: {
+      backgroundImage: 'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
     },
-    [`&.${stepConnectorClasses.active}`]: {
-        [`& .${stepConnectorClasses.line}`]: {
-            backgroundImage:
-                'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
-        },
+  },
+  [`&.${stepConnectorClasses.completed}`]: {
+    [`& .${stepConnectorClasses.vertical}`]: {
+      backgroundImage: 'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
     },
-    [`&.${stepConnectorClasses.completed}`]: {
-        [`& .${stepConnectorClasses.line}`]: {
-            backgroundImage:
-                'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
-        },
-    },
-    [`& .${stepConnectorClasses.line}`]: {
-        height: 3,
-        border: 0,
-        backgroundColor:
-            theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#eaeaf0',
-        borderRadius: 1,
-    },
+  },
+  [`& .${stepConnectorClasses.vertical}`]: {
+    height: 3,
+    border: 0,
+    backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#eaeaf0',
+    borderRadius: 1,
+  },
 }));
 
 const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#ccc',
-    zIndex: 1,
-    color: '#fff',
-    width: 50,
-    height: 50,
-    display: 'flex',
-    borderRadius: '50%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    ...(ownerState.active && {
-        backgroundImage:
-            'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
-        boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
-    }),
-    ...(ownerState.completed && {
-        backgroundImage:
-            'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
-    }),
+  backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#ccc',
+  zIndex: 1,
+  color: '#fff',
+  width: 50,
+  height: 50,
+  display: 'flex',
+  borderRadius: '50%',
+  justifyContent: 'center',
+  alignItems: 'center',
+  ...(ownerState.active && {
+    backgroundImage: 'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
+    boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
+  }),
+  ...(ownerState.completed && {
+    backgroundImage: 'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
+  }),
 }));
 
 function ColorlibStepIcon(props) {
-    const { active, completed, className } = props;
+  const { active, completed, className } = props;
 
-    const icons = {
-        1: <SettingsIcon />,
-        2: <GroupAddIcon />,
-        3: <VideoLabelIcon />,
-    };
+  const icons = {
+    1: <SettingsPowerIcon />,
+    2: <PersonIcon />,
+    3: <DescriptionIcon />,
+    4: <StorageIcon />,
+    5: <DoneIcon />,
+  };
 
-    return (
-        <ColorlibStepIconRoot ownerState={{ completed, active }} className={className}>
-            {icons[String(props.icon)]}
-        </ColorlibStepIconRoot>
-    );
+  return (
+    <ColorlibStepIconRoot ownerState={{ completed, active }} className={className}>
+      {icons[String(props.icon)]}
+    </ColorlibStepIconRoot>
+  );
 }
-
-ColorlibStepIcon.propTypes = {
-    /**
-     * Whether this step is active.
-     * @default false
-     */
-    //   active: PropTypes.bool,
-    //   className: PropTypes.string,
-    /**
-     * Mark the step as completed. Is passed to child components.
-     * @default false
-     */
-    //   completed: PropTypes.bool,
-    /**
-     * The label displayed in the step icon.
-     */
-    //   icon: PropTypes.node,
-};
 
 const steps = [
-    {
-        label: 'Welcome',
-        description: <Home />,
-    },
-    {
-        label: 'Your Details',
-        description:
-            <Details/>,
-    },
-    {
-        label: 'Create an ad',
-        description: `Try out different ad text to see what brings in the most customers,
-                and learn how to enhance your ads using features like ad extensions.
-                If you run into any problems with your ads, find out how to tell if
-                they're running and how to resolve approval issues.`,
-    },
+  {
+    label: 'Welcome',
+    description: <Home />,
+  },
+  {
+    label: 'Your Details',
+    description: <Details />,
+  },
+  {
+    label: 'Project Details',
+    description: <Project />,
+  },
+  {
+    label: 'Financial Details',
+    description: <Financial />,
+  },
+  {
+    label: 'You are all set',
+    description: <AllSet />,
+  },
 ];
-export default function Welcome() {
-    const [activeStep, setActiveStep] = React.useState(0);
-    const [skipped, setSkipped] = React.useState(new Set());
 
-    const isStepOptional = (step) => {
-        return step === 1;
-    };
+function Welcome(props) {
+  const { window } = props;
+  const navigate = useNavigate();
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [complete, setComplete] = React.useState(false);
 
-    const isStepSkipped = (step) => {
-        return skipped.has(step);
-    };
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
 
-    const handleNext = () => {
-        let newSkipped = skipped;
-        if (isStepSkipped(activeStep)) {
-            newSkipped = new Set(newSkipped.values());
-            newSkipped.delete(activeStep);
-        }
+  const [activeStep, setActiveStep] = React.useState(0);
 
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        setSkipped(newSkipped);
-    };
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    // setComplete(navigate('dashboard/projects/view'))
+  };
 
-    const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
 
-    const handleSkip = () => {
-        if (!isStepOptional(activeStep)) {
-            // You probably want to guard against something like this,
-            // it should never occur unless someone's actively trying to break something.
-            throw new Error("You can't skip a step that isn't optional.");
-        }
+  const handleReset = () => {
+    setActiveStep(0);
+  };
 
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        setSkipped((prevSkipped) => {
-            const newSkipped = new Set(prevSkipped.values());
-            newSkipped.add(activeStep);
-            return newSkipped;
-        });
-    };
+  const handleComplete = () => {
+    navigate('dashboard/projects/view');
+  };
 
-    const handleReset = () => {
-        setActiveStep(0);
-    };
+  const isMountedRef = useIsMountedRef();
 
-    return (
-        <Box sx={{ width: '100%' }}>
-            <Stepper activeStep={activeStep}>
-                {steps.map((step, index) => {
-                    const stepProps = {};
-                    const labelProps = {};
-                    if (isStepOptional(index)) {
-                        labelProps.optional = (
-                            <Typography variant="caption">Optional</Typography>
-                        );
-                    }
-                    if (isStepSkipped(index)) {
-                        stepProps.completed = false;
-                    }
-                    return (
-                        <Step key={step.label} {...stepProps}>
-                            <StepLabel {...labelProps}>{step.label}</StepLabel>
-                        </Step>
-                    );
-                })}
-            </Stepper>
-            {activeStep === steps.length ? (
-                <React.Fragment key="reset">
-                    <Typography sx={{ mt: 2, mb: 1 }}>
-                        All steps completed - you&apos;re finished
-                    </Typography>
-                    <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                        <Box sx={{ flex: '1 1 auto' }} />
-                        <Button onClick={handleReset}>Reset</Button>
-                    </Box>
-                </React.Fragment>
-            ) : (
-                <React.Fragment key="step">
-                    {steps.map((step) => {
-                        if (activeStep === 0 && step.label === "Welcome") {
-                            return <Typography sx={{ mt: 2, mb: 1 }}>{step.description}</Typography>
-                        } if (step.label === "Your Details"){
-                            return <Typography sx={{ mt: 2, mb: 1 }}>{step.description}</Typography>
-                        }
-                        return null
-                    })}
-                    <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                        <Button
-                            color="inherit"
-                            disabled={activeStep === 0}
-                            onClick={handleBack}
-                            sx={{ mr: 1 }}
-                        >
-                            Back
-                        </Button>
-                        <Box sx={{ flex: '1 1 auto' }} />
-                        {isStepOptional(activeStep) && (
-                            <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
-                                Skip
-                            </Button>
-                        )}
+  const [showPassword, setShowPassword] = useState(false);
 
-                        <Button onClick={handleNext}>
-                            {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                        </Button>
-                    </Box>
-                </React.Fragment>
-            )}
+  const LoginSchema = Yup.object().shape({
+    username: Yup.string().email('Username must be a valid email address').required('Username is required'),
+    password: Yup.string().required('Password is required'),
+  });
+
+  const defaultValues = {
+    username: 'root@Verstmedia.com',
+    password: 'hakty11',
+    remember: true,
+  };
+
+  const methods = useForm({
+    resolver: yupResolver(LoginSchema),
+    defaultValues,
+  });
+
+  const {
+    reset,
+    setError,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = methods;
+
+  const onSubmit = async (data) => {
+    try {
+      navigate('dashboard/projects/view');
+    } catch (error) {
+      console.error(error);
+      reset();
+      if (isMountedRef.current) {
+        setError('afterSubmit', error);
+      }
+    }
+  };
+
+  const drawer = (
+    <div>
+      <Toolbar />
+      <Stepper
+        activeStep={activeStep}
+        orientation="vertical"
+        sx={{ mx: 2 }}
+        // alternativeLabel
+        connector={<ColorlibConnector />}
+      >
+        {steps.map((step) => (
+          <Step key={step.label}>
+            <StepLabel StepIconComponent={ColorlibStepIcon} orientation="vertical">
+              {step.label}
+            </StepLabel>
+          </Step>
+         ))}
+        <Divider sx={{my:2}}/>
+        <ListItem key="1" disablePadding>
+          <ListItemButton onClick={() => navigate("/dashboard/app")}>
+            <ListItemText primary="Go to your portal" />
+            <ListItemIcon>
+              <LogoutIcon />
+            </ListItemIcon>
+          </ListItemButton>
+        </ListItem>
+      </Stepper>
+    </div>
+  );
+
+  const container = window !== undefined ? () => window().document.body : undefined;
+
+  return (
+    <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+      <Box sx={{ display: 'flex' }}>
+        <Box component="nav" sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }} aria-label="mailbox folders">
+          {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+          <Drawer
+            container={container}
+            variant="temporary"
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+            sx={{
+              display: { xs: 'block', sm: 'none' },
+              '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            }}
+          >
+            {drawer}
+          </Drawer>
+          <Drawer
+            variant="permanent"
+            sx={{
+              display: { xs: 'none', sm: 'block' },
+              '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            }}
+            open
+          >
+            {drawer}
+          </Drawer>
         </Box>
-    );
+        <Box component="main" sx={{ flexGrow: 1, p: 0, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
+          {/* <Toolbar /> */}
+          {steps[activeStep].description}
+          <Box sx={{ mb: 2 }}>
+            <div>
+              <Button variant="contained" onClick={handleNext} sx={{ mt: 1, mr: 1 }}>
+                {activeStep === steps.length - 1 ? 'Finish' : 'Continue'}
+              </Button>
+              <Button disabled={activeStep === 0} onClick={handleBack} sx={{ mt: 1, mr: 1 }}>
+                Back
+              </Button>
+            </div>
+          </Box>
+        </Box>
+      </Box>
+    </FormProvider>
+  );
 }
+
+Welcome.propTypes = {
+  /**
+   * Injected by the documentation to work in an iframe.
+   * You won't need it on your project.
+   */
+  window: PropTypes.func,
+};
+
+export default Welcome;
