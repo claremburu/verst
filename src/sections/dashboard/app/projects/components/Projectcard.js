@@ -65,8 +65,8 @@ export default function ProjectCard({ title, total, subheader, icon, color = 'pr
           {title}
         </Typography>
       </Box>
-      <Stack direction="row" sx={{ display: 'flex', alignItems: 'center', m: 2, justifyContent: 'center' }}>
-        <AccessTimeFilledIcon color='#ff0000' fontSize='large'/>
+      <Stack direction="row" sx={{ display: 'flex', alignItems: 'center', m: 2, justifyContent:'center' }}>
+        <AccessTimeFilledIcon fontSize='large' sx={{color: '#FFC107'}}/>
         <Typography variant="h3" fontSize={20} sx={{ mx: 2 }}>
           {total}
         </Typography>
